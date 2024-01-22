@@ -1,11 +1,11 @@
 import Routes from './router/Routes';
 
-const App = () => {
-  return (
+const App = () => { 
+  return ( 
     <div>
       <Routes />
     </div>
-  );
+  ); 
 };
 
-export default App;
+export default App; 
