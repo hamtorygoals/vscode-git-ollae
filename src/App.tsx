@@ -1,8 +1,9 @@
 import Routes from './router/Routes';
 
-const App = () => { 
-  return ( 
-    <div>
+
+const App = () => {
+  return (
+    <div className="overflow-x-hidden">
       <Routes />
     </div>
   ); 
