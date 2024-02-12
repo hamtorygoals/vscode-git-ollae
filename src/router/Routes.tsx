@@ -1,4 +1,9 @@
-import { Route, Routes as ReactRouters, useLocation } from 'react-router-dom';
+import {
+  Route,
+  Routes as ReactRouters,
+  useLocation,
+  Navigate,
+} from 'react-router-dom';
 
 import HomePage from '../pages/Homepage/page';
 import Navbar from '../Components/Navbar';
@@ -8,8 +13,6 @@ import CommunityPage from '../pages/CommunicationPage/page';
 import TimeLine from '../Components/TimeLine';
 import { useEffect } from 'react';
 
-import JoinPage from '../pages/Auth/JoinPage/page';
-import SequencePage from '../pages/Auth/JoinPage/SequencePage';
 import LoginPage from '../pages/Auth/LoginPage/page';
 import CategoryPage from '../pages/CategoryPage/page';
 import SurveyPage from '../pages/SurveyPage/page';
@@ -17,7 +20,13 @@ import SurveyPage2 from '../pages/SurveyPage/SurveyPage2';
 import NotFound from '../pages/NotFound/page';
 import NewsPage from '../pages/NewsPage/page';
 import NewsDetailPage from '../pages/NewsPage/DetailPage';
+import JoinPage from '../pages/Auth/JoinPage/page';
+import MyPage from '../pages/MyPage/page';
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
+
 const Routes = () => {
+  const currentUser = useSelector((state: RootState) => state.currentUser.name);
   const location = useLocation();
 
   // 페이지 전환 시 path 변화 감지 -> 시점 (0, 0) 시작
@@ -41,8 +50,7 @@ const Routes = () => {
 
         {/* 인증과정 (로그인, 회원가입) 라우팅입니다. */}
         <Route path="auth">
-          <Route path="join" element={<JoinPage />} />
-          <Route path="join/:stage" element={<SequencePage />} />
+          <Route path="join/:stage" element={<JoinPage />} />
           <Route path="login" element={<LoginPage />} />
         </Route>
 
@@ -63,14 +71,28 @@ const Routes = () => {
         <Route
           path="news"
           element={
-            <TimeLine
-              imgSrc={`/assets/News/news.png`}
-              title={`올래 생활뉴스`}
-            />
+            <TimeLine imgSrc="/assets/News/news.png" title="올래 생활뉴스" />
           }
         >
           <Route index element={<NewsPage />} />
           <Route path=":newsId" element={<NewsDetailPage />} />
+        </Route>
+
+        <Route
+          path="mypage/:stage"
+          element={
+            <TimeLine
+              imgSrc="/assets/TimeLine/mypage.png"
+              title={currentUser ? '마이페이지' : '비회원 신청'}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <section className="w-10 h-10 bg-[#D9D9D9] rounded-full" />
+                <p>{currentUser ? currentUser : '홍길동'}님</p>
+              </div>
+            </TimeLine>
+          }
+        >
+          <Route index element={<MyPage />} />
         </Route>
       </Route>
 

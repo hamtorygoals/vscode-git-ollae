@@ -1,6 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { RootState } from '../../redux/store';
+import { useLogout } from '../../hooks/Auth/useLogout';
 
 const Header = () => {
+  const userName = useSelector((state: RootState) => state.currentUser.name);
+  const { signOut } = useLogout();
+
   const navigate = useNavigate();
   return (
     <header className="mt-10 mb-6 px-28">
@@ -49,14 +55,35 @@ const Header = () => {
           <li>올래 생활뉴스</li>
           <li>올래 선생님</li>
         </ul>
-        <ul className="flex items-center gap-6 pl-24 font-medium text-lg text-[#666666]">
-          <li className="cursor-pointer">비회원 신청내역</li>
-          <Link to="/auth/login">
-            <li className="">로그인</li>
-          </Link>
-          <Link to="/auth/join">
-            <li className="cursor-pointer">회원가입</li>
-          </Link>
+        <ul className="flex items-center gap-6 pl-24 font-medium  text-[#666666]">
+          {userName ? (
+            <>
+              <li className="flex items-center gap-1">
+                <img
+                  src="/assets/Utils/dummyProfile.png"
+                  alt="profile"
+                  className="w-5 h-5 rounded-full"
+                />
+                <p>{userName}</p>
+              </li>
+              <Link to="/mypage/1">
+                <li className="cursor-pointer">마이페이지</li>
+              </Link>
+              <li className="cursor-pointer" onClick={() => signOut()}>
+                로그아웃
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="cursor-pointer">비회원 신청내역</li>
+              <Link to="/auth/login">
+                <li className="cursor-pointer">로그인</li>
+              </Link>
+              <Link to="/auth/join/1">
+                <li className="cursor-pointer">회원가입</li>
+              </Link>
+            </>
+          )}
         </ul>
       </span>
     </header>
