@@ -1,9 +1,4 @@
-import {
-  Route,
-  Routes as ReactRouters,
-  useLocation,
-  Navigate,
-} from 'react-router-dom';
+import { Route, Routes as ReactRouters, useLocation } from 'react-router-dom';
 
 import HomePage from '../pages/Homepage/page';
 import Navbar from '../Components/Navbar';
@@ -24,6 +19,7 @@ import JoinPage from '../pages/Auth/JoinPage/page';
 import MyPage from '../pages/MyPage/page';
 import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
+import LessonPage from '../pages/LessonPage/page';
 
 const Routes = () => {
   const currentUser = useSelector((state: RootState) => state.currentUser.name);
@@ -42,6 +38,7 @@ const Routes = () => {
       <Route path="/" element={<Navbar />}>
         <Route index element={<HomePage />} />
         <Route path=":category/:categoryId" element={<CategoryPage />} />
+        <Route path="lesson" element={<LessonPage />} />
         <Route path=":category/:categoryId/survey" element={<SurveyPage />} />
         <Route
           path=":category/:categoryId/survey/2"

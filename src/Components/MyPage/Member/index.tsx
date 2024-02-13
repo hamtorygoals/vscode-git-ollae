@@ -8,7 +8,7 @@ import HeartLesson from './HeartLesson';
 
 const Member = () => {
   const params = useParams();
-  const stage = params.stage;
+  const stage = params.stage ? params.stage : 1;
 
   const [step, setStep] = useState(1);
 

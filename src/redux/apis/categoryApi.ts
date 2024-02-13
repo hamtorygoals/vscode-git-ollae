@@ -1,5 +1,6 @@
 import { apiSlice } from '.';
 import { CategoryLessonsResponse } from '../../types/Response/Category/CategoryLessonsType';
+import { DetailLessonResponse } from '../../types/Response/Category/DetailLessonType';
 
 interface ParamsProps {
   categoryId: number;
@@ -28,7 +29,17 @@ export const categoryApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    getDetailLesson: builder.query<DetailLessonResponse, number>({
+      providesTags: ['Lesson'],
+      query: (lessonId) => {
+        return {
+          url: `/lesson/${lessonId}`,
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetCategoryLessonsQuery } = categoryApi;
+export const { useGetCategoryLessonsQuery, useGetDetailLessonQuery } =
+  categoryApi;

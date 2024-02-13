@@ -4,67 +4,60 @@ interface ShortMenuProps {
 
 const ShortMenu = ({ setShowClass }: ShortMenuProps) => {
   return (
-    <section
-      className="grid w-[1120px] grid-cols-4 border-2 absolute top-[68px] left-2 bg-white"
-      onMouseEnter={() => setShowClass(true)}
-    >
-      <ul className="flex flex-col items-center">
-        <li className="w-40 py-2 text-lg text-center border-b-2 cursor-pointer border-b-black">
-          디지털
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          스마트폰
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          컴퓨터
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          키오스크
-        </li>
-      </ul>
-      <ul className="flex flex-col items-center">
-        <li className="w-40 py-2 text-lg text-center border-b-2 cursor-pointer border-b-black">
-          취미
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          공예
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          요리
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          운동
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          악기
-        </li>
-      </ul>
-      <ul className="flex flex-col items-center">
-        <li className="w-40 py-2 text-lg text-center border-b-2 cursor-pointer border-b-black">
-          경제
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          자산
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          부동산
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          취업/창업
-        </li>
-      </ul>
-      <ul className="flex flex-col items-center">
-        <li className="w-40 py-2 text-lg text-center border-b-2 cursor-pointer border-b-black">
-          라이프
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          외국어
-        </li>
-        <li className="py-3 my-2 cursor-pointer hover:bg-amber-900 hover:text-white hover:px-12">
-          심리
-        </li>
-      </ul>
-    </section>
+    <div className="flex flex-col items-center">
+      <section className="bg-[#E6E6E6] font-medium text-[#808080] flex items-center py-5 overflow-hidden">
+        <p className="w-64 pl-12">디지털</p>
+        <p className="w-64 pl-12">취미</p>
+        <p className="w-64 pl-12">경제</p>
+        <p className="w-64 pl-12">라이프</p>
+      </section>
+
+      <section className="flex items-center">
+        <div className="w-64 pl-12 border-r h-[220px]">
+          <ul className="font-medium text-sm text-[#666666] flex flex-col gap-6 py-6">
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              스마트폰
+            </li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              컴퓨터
+            </li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              키오스크
+            </li>
+          </ul>
+        </div>
+
+        <div className="w-64 pl-12 border-r h-[220px]">
+          <ul className="font-medium text-sm text-[#666666] flex flex-col gap-6 py-6">
+            <li className="cursor-pointer hover:text-primary01 w-fit">공예</li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">요리</li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">운동</li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">악기</li>
+          </ul>
+        </div>
+
+        <div className="w-64 pl-12 border-r h-[220px]">
+          <ul className="font-medium text-sm text-[#666666] flex flex-col gap-6 py-6">
+            <li className="cursor-pointer hover:text-primary01 w-fit">자산</li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              부동산
+            </li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              취업/창업
+            </li>
+          </ul>
+        </div>
+
+        <div className="w-64 pl-12 h-[220px]">
+          <ul className="font-medium text-sm text-[#666666] flex flex-col gap-6 py-6">
+            <li className="cursor-pointer hover:text-primary01 w-fit">
+              외국어
+            </li>
+            <li className="cursor-pointer hover:text-primary01 w-fit">심리</li>
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 };
 

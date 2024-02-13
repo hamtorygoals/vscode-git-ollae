@@ -4,6 +4,7 @@ import Member from '../../Components/MyPage/Member';
 import NonMember from '../../Components/MyPage/NonMember';
 
 const MyPage = () => {
+  // 로그인했을 경우 currentUser = true
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.isLoggedIn,
   );

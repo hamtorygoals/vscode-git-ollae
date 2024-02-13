@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FieldValues } from 'react-hook-form';
 import { setCurrentUser } from '../../redux/slices/currentUserSlice';
 import axios from 'axios';
+import { removeNonUser } from '../../redux/slices/nonUserSlice';
 
 export const useLogin = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ export const useLogin = () => {
           }),
         );
 
+        // 로그인시 비회원이 입력한 휴대전화번호 기록 삭제
+        dispatch(removeNonUser());
         navigate('/');
       } catch (err) {
         console.log(err);
