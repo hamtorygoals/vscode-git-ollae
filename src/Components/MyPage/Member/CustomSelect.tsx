@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
-interface AgeSelectProps {
+interface SelectProps {
   options: string[];      // 선택 옵션 배열
   initialOption: string;  // 초기 선택 옵션
 }
 
-const CustomSelect: React.FC<AgeSelectProps> = ({ options, initialOption }) => {
+const CustomSelect: React.FC<SelectProps & {onSelect: (value: string) => void }> = ({ options, initialOption, onSelect }) => {
   const [selectedOption, setSelectedOption] = useState<string>(initialOption);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+    onSelect(event.target.value);
   };
 
   return (
@@ -46,5 +47,4 @@ const CustomSelect: React.FC<AgeSelectProps> = ({ options, initialOption }) => {
   );
 };
 
-// CustomSelect 컴포넌트를 외부에서 사용할 수 있도록 내보냅니다.
 export default CustomSelect;

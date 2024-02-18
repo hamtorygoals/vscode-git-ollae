@@ -1,14 +1,26 @@
 // import { useState } from 'react';
 import { Toggle } from './Toggle';
+import { formatPhone } from '../../../../utils/formatPhone';
 import React, { ChangeEvent, useState } from 'react';
 import TextInput from '../TextInput';
 import { cityDetails, Citydetails } from '../../../../constants/Survey/cityDetails';
 import CustomSelect from '../CustomSelect';
-import CitySelector from '../CitySelector';
 import PasswordChange from './PasswordChange';
+// import React, { Dispatch, SetStateAction } from 'react';
+import CitySelector from '../CitySelector';
 
 
 interface ModifyUserProps {
+  name: string;
+  gender: string;
+  birthYear: string;
+  email: string;
+  emailProvider: string;
+  city: string;
+  district: string;
+  neighborhood: string;
+  isMail: boolean;
+  isSms: boolean;
 }
 
 
@@ -27,66 +39,48 @@ const ModifyUser = () => {
   const numOptions = ['010', '070', '02'];
   const initialnumOption = '010';
 
-  
-//
-  const [selectedCity, setSelectedCity] = useState('');
-  const [showCities, setShowCities] = useState(false);
-  const [selectedGu, setSelectedGu] = useState('');
-  const [showGu, setShowGu] = useState(false);
-  const [selectedDong, setSelectedDong] = useState('');
-  const [showDong, setShowDong] = useState(false);
+  const initialProvince = '서울특별시';
+  const initialCity = '강서구';
+  const initialNeighborhood = '창동';
 
-  const handleCityClick = (city: string) => {
-    setSelectedCity(city);
-    setShowCities(false);
-  };
-  const handleGuClick = (Gu: string) => {
-    if (selectedCity && selectedCity.length > 0) {
-      setSelectedGu(Gu);
-      setShowGu(false);
-    }
-    else {
-      return
-    }
-  };
-  const handleDongClick = (dong: string) => {
-    if (selectedGu && selectedGu.length > 0 ) {
-      setSelectedDong(dong);
-      setShowDong(false);
-    }
-    else {
-      return
-    }
-  };
-//
-//
+
   const [isMail, setIsMail] = useState(false);
   const [isSms, setIsSms] = useState(false);
-//
-
-//
-// const [passwordChangeVisible, setPasswordChangeVisible] = useState(false);
-
-//   const handlePasswordChangeButtonClick = () => {
-//     setPasswordChangeVisible(true);
-//   };
   
-const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
   const file: File | null = e.target.files?.[0] || null;
   setSelectedFile(file);
   // 여기에 선택된 파일을 처리하는 로직을 추가할 수 있습니다.
-};
-  //
-  const [showPasswordChange, setShowPasswordChange] = useState(false);
-
-  const handlePasswordChangeButtonClick = () => {
-    setShowPasswordChange(true);
   };
+
+
+
+
+  const logModifiedInformation = (modifiedInfo: ModifyUserProps) => {
+    // 수정된 정보를 기록하는 로직을 추가합니다. 예를 들어:
+    console.log('수정된 정보:', modifiedInfo);
+  };
+  const [modifiedInfo, setModifiedInfo] = useState<ModifyUserProps>({
+    name: '',  // 기본값으로 초기화하거나 현재 사용자 데이터에서 가져올 수 있습니다.
+    gender: '',
+    birthYear: '',
+    email: '',
+    emailProvider: '',
+    city: '',
+    district: '',
+    neighborhood: '',
+    isMail: false,
+    isSms: false,
+  });
+
+  
 
   return (
     <div className="mx-[340px] rounded-3xl shadow-md bg-white mt-10 px-12 py-10">
+
+      
       <div>
         <p className="text-2xl font-medium">기본 정보</p>
         <div className="flex items-start gap-3 mt-5">
@@ -117,25 +111,16 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
                   onChange={handleFileChange}
                 />
               </label>
-              {/* <div className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2]">
+              <div className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2]">
                 <p className="text-[#666666]">*** 비밀번호 변경하기</p>
-              </div> */}
-              {/* <button
-          className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2] text-[#666666]"
-          onClick={() => setShowPasswordChange(true)}
-        >
-          비밀번호 변경하기
-        </button> */}
-
-        <button 
-        className='h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2] text-[#666666]'>
-          *** 비밀번호 변경하기
-        </button>
-        
+              </div>       
             </div>
           </section>
         </div>
       </div>
+
+
+
       <div>
         <div className="mt-10">
           <div className="flex gap-24">
@@ -147,24 +132,61 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
             </div>
             <div className="flex items-center gap-10 h-[41px]">
               <p className="text-[#333333]">성별</p>
-              <CustomSelect options={genderOptions} initialOption={initialGenderOption} />
+              <CustomSelect options={genderOptions} initialOption={initialGenderOption} onSelect={(gender) => setModifiedInfo((prevInfo) => ({ ...prevInfo, gender }))}/>
             </div>
           </div>
           <div className="flex items-center gap-10 mt-7 h-[41px]">
             <p>출생연도</p>
-            <CustomSelect options={ageOptions} initialOption={initialageOption} />
+            {/* <CustomSelect options={ageOptions} initialOption={initialageOption} /> */}
+            <CustomSelect
+              options={ageOptions}
+              initialOption={initialageOption}
+              onSelect={(birthYear) =>
+                setModifiedInfo((prevInfo) => ({ ...prevInfo, birthYear }))
+              }
+            />
           </div>
           <div className="flex items-center gap-10 mt-10 h-[41px]">
             <p>메일주소</p>
-            <TextInput initialValue="hongkildong" />
+            {/* <TextInput initialValue="hongkildong" /> */}
+            <TextInput
+              initialValue="hongkildong"
+              onInputChange={(email) =>
+                setModifiedInfo((prevInfo) => ({ ...prevInfo, email }))
+              }
+            />
             <p>@</p>
-            <CustomSelect options={emailOptions} initialOption={initialemailOption} />
+            {/* <CustomSelect options={emailOptions} initialOption={initialemailOption} /> */}
+            <CustomSelect
+              options={emailOptions}
+              initialOption={initialemailOption}
+              onSelect={(emailProvider) =>
+                setModifiedInfo((prevInfo) => ({ ...prevInfo, emailProvider }))
+              }
+            />
           </div>
           <div className="flex items-center gap-10 mt-7 h-[41px] ">
             <p>전화번호</p>
-            <CustomSelect options={numOptions} initialOption={initialnumOption} />
-            <TextInput initialValue="1234" />
-            <TextInput initialValue="1234" />
+            {/* <CustomSelect options={numOptions} initialOption={initialnumOption} /> */}
+            <CustomSelect
+              options={numOptions}
+              initialOption={initialnumOption}
+              onSelect={(num) => setModifiedInfo((prevInfo) => ({ ...prevInfo, num }))}
+            />
+            {/* <TextInput initialValue="1234" /> */}
+            <TextInput
+              initialValue="1234"
+              onInputChange={(num1) =>
+                setModifiedInfo((prevInfo) => ({ ...prevInfo, num1 }))
+              }
+            />
+            {/* <TextInput initialValue="1234" /> */}
+            <TextInput
+              initialValue="1234"
+              onInputChange={(num2) =>
+                setModifiedInfo((prevInfo) => ({ ...prevInfo, num2 }))
+              }
+            />
           </div>
         </div>
       </div>
@@ -174,7 +196,7 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         <p className='text-2xl font-medium mt-14'>주소</p>
         <div className="flex gap-7 w-[980px] h-auto">
           <div className=' mt-7'>
-        <CitySelector
+            <CitySelector
               cityDetails={cityDetails}
               onSelect={(
                 city: string,
@@ -182,9 +204,12 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
                 neighborhood: string,
               ) => {;
               }}
-            /> </div>
-
-              </div>
+              initialProvince={initialProvince}
+              initialCity={initialCity}
+              initialNeighborhood={initialNeighborhood}
+            /> 
+          </div>
+        </div>
       </div>
 
 
@@ -208,6 +233,8 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       <div className="flex items-center justify-center mt-16 mb-2">
         <button
           className="text-white bg-primary01 rounded-[50px] font-semibold w-[60%] p-3"
+          onClick={() => {
+            logModifiedInformation(modifiedInfo);}}
         >
           정보 수정 완료
         </button>

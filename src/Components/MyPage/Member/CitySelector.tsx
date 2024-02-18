@@ -6,15 +6,20 @@ interface CityDetails {
   };
 }
 
+
 interface Props {
+  initialProvince: string;
+  initialCity: string;
+  initialNeighborhood: string;
   cityDetails: CityDetails;
   onSelect: (city: string, district: string, neighborhood: string) => void;
 }
 
-const CitySelector: React.FC<Props> = ({ cityDetails, onSelect }) => {
-  const [selectedProvince, setSelectedProvince] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>('');
-  const [selectedNeighborhood, setSelectedNeighborhood] = useState<string>('');
+const CitySelector: React.FC<Props> = ({ cityDetails, onSelect, initialProvince, initialCity, initialNeighborhood}) => {
+
+  const [selectedProvince, setSelectedProvince] = useState<string>(initialProvince);
+  const [selectedCity, setSelectedCity] = useState<string>(initialCity);
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState<string>(initialNeighborhood);
 
   const handleProvinceChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -59,16 +64,9 @@ const CitySelector: React.FC<Props> = ({ cityDetails, onSelect }) => {
           backgroundPosition: 'right 23px center',
         }}
       >
-        <option
-          style={{
-            fontSize: '14px',
-            textAlign: 'left',
-            lineHeight: '16.71px',
-            paddingLeft: '20px',
-          }}
-        >
-          시/도
-        </option>
+        <option value="" disabled hidden>
+        {initialProvince}
+      </option>
         {Object.keys(cityDetails).map((province, index) => (
           <option key={province} value={province}>
             {province}
@@ -93,16 +91,9 @@ const CitySelector: React.FC<Props> = ({ cityDetails, onSelect }) => {
           backgroundPosition: 'right 23px center',
         }}
       >
-        <option
-          style={{
-            fontSize: '14px',
-            textAlign: 'left',
-            lineHeight: '16.71px',
-            paddingLeft: '20px',
-          }}
-        >
-          시/군/구
-        </option>
+        <option value="" disabled hidden>
+        {initialCity}
+      </option>
         {selectedProvince &&
           cityDetails[selectedProvince] &&
           Object.keys(cityDetails[selectedProvince]).map((city) => (
@@ -129,16 +120,9 @@ const CitySelector: React.FC<Props> = ({ cityDetails, onSelect }) => {
           backgroundPosition: 'right 23px center',
         }}
       >
-        <option
-          style={{
-            fontSize: '14px',
-            textAlign: 'left',
-            lineHeight: '16.71px',
-            paddingLeft: '20px',
-          }}
-        >
-          읍/면/동
-        </option>
+        <option value="" disabled hidden>
+        {initialNeighborhood}
+      </option>
         {selectedProvince &&
           selectedCity &&
           cityDetails[selectedProvince][selectedCity] &&
