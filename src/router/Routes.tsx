@@ -95,6 +95,7 @@ const Routes = () => {
 
       {/* 잘못된 경로로 들어왔을 경우 */}
       <Route path="/*" element={<NotFound />} />
+
     </ReactRouters>
   );
 };

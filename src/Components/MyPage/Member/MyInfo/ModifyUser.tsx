@@ -1,26 +1,22 @@
 // import { useState } from 'react';
 import { Toggle } from './Toggle';
-import { formatPhone } from '../../../../utils/formatPhone';
-import OptionSelector from '../OptionSelector';
 import React, { ChangeEvent, useState } from 'react';
 import TextInput from '../TextInput';
 import { cityDetails, Citydetails } from '../../../../constants/Survey/cityDetails';
+import CustomSelect from '../CustomSelect';
+import CitySelector from '../CitySelector';
+import PasswordChange from './PasswordChange';
+
 
 interface ModifyUserProps {
-  mailAgree: boolean;
-  smsAgree: boolean;
-  name: string;
-  gender: string;
-  birthYear: string;
-  email: string;
-  phoneNum: string;
-  address: string;
-  setShowModify: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+
+
 const ModifyUser = () => {
-  const genderOptions = ['남자', '여자', '기타'];
-  const initialGenderOption = '남자';
+  
+  const genderOptions = [ '남자', '여자' , '기타',];
+  const initialGenderOption = '남성';
 
   const ageOptions = ['1950년대', '1960년대', '1970년대', '1980년대', '1990년대', '2000년대', '2010년대'];
   const initialageOption = '1970년대';
@@ -30,6 +26,8 @@ const ModifyUser = () => {
 
   const numOptions = ['010', '070', '02'];
   const initialnumOption = '010';
+
+  
 //
   const [selectedCity, setSelectedCity] = useState('');
   const [showCities, setShowCities] = useState(false);
@@ -67,6 +65,11 @@ const ModifyUser = () => {
 //
 
 //
+// const [passwordChangeVisible, setPasswordChangeVisible] = useState(false);
+
+//   const handlePasswordChangeButtonClick = () => {
+//     setPasswordChangeVisible(true);
+//   };
   
 const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -76,7 +79,11 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
   // 여기에 선택된 파일을 처리하는 로직을 추가할 수 있습니다.
 };
   //
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
 
+  const handlePasswordChangeButtonClick = () => {
+    setShowPasswordChange(true);
+  };
 
   return (
     <div className="mx-[340px] rounded-3xl shadow-md bg-white mt-10 px-12 py-10">
@@ -102,7 +109,7 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
               <p className="text-[#666666]">프로필 사진 업로드</p>
             </div>
             <div className="flex items-center gap-10 font-medium">
-              <label className="border h-10 px-16 py-2 rounded-2xl text-[#999999] text-sm cursor-pointer">
+              <label className="border border-[#CCCCCC] h-10 px-16 py-2 rounded-2xl text-[#999999] text-sm cursor-pointer">
                 파일선택...
                 <input
                   type="file"
@@ -110,9 +117,21 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
                   onChange={handleFileChange}
                 />
               </label>
-              <div className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2]">
+              {/* <div className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2]">
                 <p className="text-[#666666]">*** 비밀번호 변경하기</p>
-              </div>
+              </div> */}
+              {/* <button
+          className="h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2] text-[#666666]"
+          onClick={() => setShowPasswordChange(true)}
+        >
+          비밀번호 변경하기
+        </button> */}
+
+        <button 
+        className='h-10 px-10 py-2 rounded-2xl bg-[#F2F2F2] text-[#666666]'>
+          *** 비밀번호 변경하기
+        </button>
+        
             </div>
           </section>
         </div>
@@ -122,38 +141,28 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
           <div className="flex gap-24">
             <div className="flex items-center gap-16 h-[41px]">
               <p className="text-[#333333]">이름</p>
-              <TextInput initialValue="홍길동" />
+              <div className="border border-[#CCCCCC] rounded-2xl h-[41px] w-[136px] px-[16px] py-[12px] text-[#333333] flex justify-center items-center">
+                <p className='text-[#333333] text-center'>홍길동</p>
+              </div>
             </div>
             <div className="flex items-center gap-10 h-[41px]">
               <p className="text-[#333333]">성별</p>
-              <OptionSelector
-                options={genderOptions}
-                initialOption={initialGenderOption}
-              />
+              <CustomSelect options={genderOptions} initialOption={initialGenderOption} />
             </div>
           </div>
           <div className="flex items-center gap-10 mt-7 h-[41px]">
             <p>출생연도</p>
-            <OptionSelector
-              options={ageOptions}
-              initialOption={initialageOption}
-            />
+            <CustomSelect options={ageOptions} initialOption={initialageOption} />
           </div>
           <div className="flex items-center gap-10 mt-10 h-[41px]">
             <p>메일주소</p>
             <TextInput initialValue="hongkildong" />
             <p>@</p>
-            <OptionSelector
-              options={emailOptions}
-              initialOption={initialemailOption}
-            />
+            <CustomSelect options={emailOptions} initialOption={initialemailOption} />
           </div>
-          <div className="flex items-center gap-10 mt-7 h-[41px]">
+          <div className="flex items-center gap-10 mt-7 h-[41px] ">
             <p>전화번호</p>
-            <OptionSelector
-              options={numOptions}
-              initialOption={initialnumOption}
-            />
+            <CustomSelect options={numOptions} initialOption={initialnumOption} />
             <TextInput initialValue="1234" />
             <TextInput initialValue="1234" />
           </div>
@@ -164,96 +173,17 @@ const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       <div>
         <p className='text-2xl font-medium mt-14'>주소</p>
         <div className="flex gap-7 w-[980px] h-auto">
-                <div className="pt-5 flex flex-col gap-2 w-[208px] h-[220px]">
-                  <div
-                    className={`border flex justify-between px-5 py-3 rounded-2xl bg-[#FFFFFF] z-0 border-[#CCCCCC]`}
-                    onClick={() => setShowCities(!showCities)}
-                  >
-                    <p
-                      className={`text-sm text-[#333333]`}>
-                      {selectedCity ? selectedCity : '시/도'}
-                    </p>
-                    <div className=" mt-1">
-                      <img src="/assets/Mypage/graycheck.svg" alt="체크 표시"/>
-                    </div>
-                  </div>
-                  {showCities && (
-                    <div className="h-60 w-100 border rounded-2xl px-6 py-5 text-sm mt-[-36px] overflow-auto scrollbar-container bg-[#FFFFFF]">
-                      <div className="mt-6 flex flex-col gap-5 h-3000 bg-[#FFFFFF]">
-                        {Object.keys(cityDetails).map((city, index) => (
-                          <p key={index} onClick={() => handleCityClick(city)}>
-                            {city}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+          <div className=' mt-7'>
+        <CitySelector
+              cityDetails={cityDetails}
+              onSelect={(
+                city: string,
+                district: string,
+                neighborhood: string,
+              ) => {;
+              }}
+            /> </div>
 
-                <div className="pt-5 flex flex-col gap-2 w-[208px] h-[220px]">
-                  <div
-                    className={`border flex justify-between px-5 py-3 rounded-2xl bg-[#FFFFFF] z-0 border-[#CCCCCC]`}
-                    onClick={() => setShowGu(!showGu)}
-                  >
-                    <p
-                      className={`text-sm text-[#333333]`}
-                    >
-                      {selectedGu ? selectedGu : '시/군/구'}
-                    </p>
-                    <div className=" mt-1">
-                      <img src="/assets/Mypage/graycheck.svg" alt="체크 표시"/>
-                    </div>
-                  </div>
-                  {showGu && (
-                    <div className="h-60 w-100 border rounded-2xl px-6 py-5 text-sm mt-[-36px] overflow-auto scrollbar-container">
-                      <div className="mt-6 flex flex-col gap-5 h-3000">
-                        {selectedCity &&
-                          cityDetails[selectedCity] &&
-                          Object.keys(cityDetails[selectedCity]).map(
-                            (gu, index) => (
-                              <p key={index} onClick={() => handleGuClick(gu)}>
-                                {gu}
-                              </p>
-                            ),
-                          )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-5 flex flex-col gap-2 w-[208px] h-[220px]">
-                  <div
-                    className={`border flex justify-between px-5 py-3 rounded-2xl bg-[#FFFFFF] z-0 border-[#CCCCCC]`}
-                    onClick={() => setShowDong(!showDong)}
-                  >
-                    <p
-                      className={`text-sm text-[#333333]`}
-                    >
-                      {selectedDong ? selectedDong : '읍/면/동'}
-                    </p>
-                    <div className=" mt-1">
-                      <img src="/assets/Mypage/graycheck.svg" alt="체크 표시"/>
-                    </div>
-                  </div>
-                  {showDong && (
-                    <div className="h-60 w-100 border rounded-2xl px-6 py-5 text-sm mt-[-36px] overflow-auto scrollbar-container">
-                      <div className="mt-6 flex flex-col gap-5 h-3000">
-                        {selectedCity &&
-                          selectedGu &&
-                          cityDetails[selectedCity][selectedGu].map(
-                            (dong, index) => (
-                              <p
-                                key={index}
-                                onClick={() => handleDongClick(dong)}
-                              >
-                                {dong}
-                              </p>
-                            ),
-                          )}
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
       </div>
 

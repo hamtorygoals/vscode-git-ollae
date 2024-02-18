@@ -8,13 +8,14 @@ const TextInput = ({initialValue }: {initialValue: string}) => {
   };
 
   return (
-    <div className="border rounded-2xl h-[41px] w-[136px] px-[16px] py-[12px] text-[#333333] flex justify-center items-center">
+    <div className="border border-[#CCCCCC] rounded-2xl h-[41px] w-[136px] px-[16px] py-[12px] text-[#333333] flex justify-center items-center">
       <input
         type="text"
         value={value}
         onChange={handleInputChange}
         className="w-full h-full outline-none text-[#333333] text-center"
       />
+      
     </div>
   );
 }
