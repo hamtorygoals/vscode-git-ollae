@@ -21,6 +21,9 @@ interface ModifyUserProps {
   neighborhood: string;
   isMail: boolean;
   isSms: boolean;
+  num: string;
+  num1: string;
+  num2: string;
 }
 
 
@@ -43,9 +46,12 @@ const ModifyUser = () => {
   const initialCity = '강서구';
   const initialNeighborhood = '창동';
 
+  const initialIsMail = false;
+  const initialIsSms = true;
 
-  const [isMail, setIsMail] = useState(false);
-  const [isSms, setIsSms] = useState(false);
+
+  const [isMail, setIsMail] = useState(initialIsMail);
+  const [isSms, setIsSms] = useState(initialIsSms);
   
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -59,7 +65,6 @@ const ModifyUser = () => {
 
 
   const logModifiedInformation = (modifiedInfo: ModifyUserProps) => {
-    // 수정된 정보를 기록하는 로직을 추가합니다. 예를 들어:
     console.log('수정된 정보:', modifiedInfo);
   };
   const [modifiedInfo, setModifiedInfo] = useState<ModifyUserProps>({
@@ -73,6 +78,9 @@ const ModifyUser = () => {
     neighborhood: '',
     isMail: false,
     isSms: false,
+    num: '',
+    num1: '',
+    num2: '',
   });
 
   
@@ -80,7 +88,7 @@ const ModifyUser = () => {
   return (
     <div className="mx-[340px] rounded-3xl shadow-md bg-white mt-10 px-12 py-10">
 
-      
+
       <div>
         <p className="text-2xl font-medium">기본 정보</p>
         <div className="flex items-start gap-3 mt-5">
@@ -137,7 +145,6 @@ const ModifyUser = () => {
           </div>
           <div className="flex items-center gap-10 mt-7 h-[41px]">
             <p>출생연도</p>
-            {/* <CustomSelect options={ageOptions} initialOption={initialageOption} /> */}
             <CustomSelect
               options={ageOptions}
               initialOption={initialageOption}
@@ -148,7 +155,6 @@ const ModifyUser = () => {
           </div>
           <div className="flex items-center gap-10 mt-10 h-[41px]">
             <p>메일주소</p>
-            {/* <TextInput initialValue="hongkildong" /> */}
             <TextInput
               initialValue="hongkildong"
               onInputChange={(email) =>
@@ -156,7 +162,6 @@ const ModifyUser = () => {
               }
             />
             <p>@</p>
-            {/* <CustomSelect options={emailOptions} initialOption={initialemailOption} /> */}
             <CustomSelect
               options={emailOptions}
               initialOption={initialemailOption}
@@ -167,20 +172,17 @@ const ModifyUser = () => {
           </div>
           <div className="flex items-center gap-10 mt-7 h-[41px] ">
             <p>전화번호</p>
-            {/* <CustomSelect options={numOptions} initialOption={initialnumOption} /> */}
             <CustomSelect
               options={numOptions}
               initialOption={initialnumOption}
               onSelect={(num) => setModifiedInfo((prevInfo) => ({ ...prevInfo, num }))}
             />
-            {/* <TextInput initialValue="1234" /> */}
             <TextInput
               initialValue="1234"
               onInputChange={(num1) =>
                 setModifiedInfo((prevInfo) => ({ ...prevInfo, num1 }))
               }
             />
-            {/* <TextInput initialValue="1234" /> */}
             <TextInput
               initialValue="1234"
               onInputChange={(num2) =>
@@ -198,11 +200,13 @@ const ModifyUser = () => {
           <div className=' mt-7'>
             <CitySelector
               cityDetails={cityDetails}
-              onSelect={(
-                city: string,
-                district: string,
-                neighborhood: string,
-              ) => {;
+              onSelect={(city, district, neighborhood) => {
+                setModifiedInfo((prevInfo) => ({
+                  ...prevInfo,
+                  city,
+                  district,
+                  neighborhood,
+                }));
               }}
               initialProvince={initialProvince}
               initialCity={initialCity}
